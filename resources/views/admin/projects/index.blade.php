@@ -16,11 +16,14 @@
 
     @foreach($projects as $project)
     <tr >
-      <td>{{$project->title}}</td>
-      <td>{{$project->description}}</td>
-      <td>{{$project->content}}</td>
-      <td>{{$project->slug}}</td>
-      <td><a href="{{route('admin.projects.show', $project->slug)}}"><i class="fa-solid fa-magnifying-glass"></i></a></td>
+        <td>{{$project->title}}</td>
+        <td>{{$project->description}}</td>
+        <td>{{$project->content}}</td>
+        <td>{{$project->slug}}</td>
+        <td>
+            <a href="{{route('admin.projects.show', $project->slug)}}"><i class="fa-solid fa-magnifying-glass"></i></a>
+            <a href="{{route('admin.projects.edit', $project->slug)}}"><i class="fa-solid fa-pen"></i></a>
+        </td>
     </tr>
     @endforeach
 

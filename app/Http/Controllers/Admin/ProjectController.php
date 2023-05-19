@@ -59,7 +59,7 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
-        //
+        return view('admin/projects/edit', compact('project'));
     }
 
     /**
@@ -71,7 +71,14 @@ class ProjectController extends Controller
      */
     public function update(Request $request, Project $project)
     {
-        //
+        $formData = $request->all();
+
+        $this->validateForm($request);
+
+        $project->update($formData);
+        $project->save();
+
+        return redirect()->route('projects.show', $project->id);
     }
 
     /**
@@ -83,5 +90,27 @@ class ProjectController extends Controller
     public function destroy(Project $project)
     {
         //
+    }
+
+    private function validateForm($request)
+    {
+        $request->validate(
+            [
+                'title' => 'required|min:20',
+                'description' => 'required|min:100|max:1000',
+                'content' => 'required|min:500',
+            ],
+            [
+                'title.required' => 'Il campo del titolo è richiesto',
+                'title.min' => 'Il campo del titolo deve avere almeno :min caratteri',
+                'description.required' => 'Il campo della descrizione è richiesto',
+                'description.max' => 'Il campo della descrizione può avere al massimo :max caratteri',
+                'description.min' => 'Il campo della descrizione deve avere almeno :min caratteri',
+                'content.required' => 'Il contenuto è richiesto',
+                'content.min' => 'Il contenuto deve avere almeno :min caratteri',
+
+            ]
+        );
+
     }
 }
